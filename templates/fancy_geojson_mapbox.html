@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>COVID19 : {{city}}</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.0/mapbox-gl.css' rel='stylesheet' />
+
+<style>
+body { margin:0; padding:0; font-family: Arial, Helvetica, sans-serif;}
+#map { position:absolute; top:0; bottom:0; width:100%; }
+
+.mapboxgl-popup {
+max-width: 400px;
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #21bf73;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+
+
+</head>
+
+<body>
+
+<div id='map'> </div>
+
+<nav id="menu">
+	{% for cat,layer_menu in menudict.items() %}	
+		<div class="dropdown" style="float:left;">
+    		<button class="dropbtn">{{cat}} 
+    		</button>
+			<div class="dropdown-content" style="left:0;">
+				{% for layerm in layer_menu %}
+			  		<a id="{{layerm}}_l" href="#" onclick='toggle_layer("{{layerm}}");'>{{layerm}}</a>
+					
+			  	{%endfor %}
+				
+			</div>
+  		</div>
+	{% endfor %} 
+</nav>
+
+<script>
+
+mapboxgl.accessToken = '{{mapbox_key}}';
+var map = new mapboxgl.Map({
+container: 'map',
+style: '{{mapbox_style}}',
+center: {{center}},
+zoom: 13,
+pitch: 45,
+bearing: -17.6,
+antialias: true
+});
+
+map.on('load', function () {
+
+var layers = map.getStyle().layers;
+ 
+var labelLayerId;
+for (var i = 0; i < layers.length; i++) {
+if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+labelLayerId = layers[i].id;
+break;
+}
+}
+ 
+map.addLayer({
+'id': '3d-buildings',
+'source': 'composite',
+'source-layer': 'building',
+'filter': ['==', 'extrude', 'true'],
+'type': 'fill-extrusion',
+'minzoom': 15.5,
+'paint': {
+'fill-extrusion-color': '#D6D6D6',
+ 
+// use an 'interpolate' expression to add a smooth transition effect to the
+// buildings as the user zooms in
+'fill-extrusion-height': [
+"interpolate", ["linear"], ["zoom"],
+15.5, 0,
+15.55, ["get", "height"]
+],
+'fill-extrusion-base': [
+"interpolate", ["linear"], ["zoom"],
+15.5, 0,
+15.55, ["get", "min_height"]
+],
+'fill-extrusion-opacity': .7
+}
+}, labelLayerId);
+
+
+
+
+{% for layer in layers %}
+	map.addLayer(
+		{{layer}}
+	);	
+{% endfor %}
+
+map.on('click', 'dens_alto_loc', function(e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML('pacientes alto riesgo en ' + e.features[0].properties['LocNombre']+
+' : '+e.features[0].properties['geometry_count'] + ", densidad: " +
+e.features[0].properties['densidad_pacientes_km2'] + " por km2. " )
+.addTo(map);
+});
+
+map.on('click', 'dens_medio_loc', function(e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML('pacientes medio riesgo en ' + e.features[0].properties['LocNombre']+
+' : '+e.features[0].properties['geometry_count'] + ", densidad: " +
+e.features[0].properties['densidad_pacientes_km2'] + " por km2. " )
+.addTo(map);
+});
+
+map.on('click', 'dens_bajo_loc', function(e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML('pacientes bajo riesgo en ' + e.features[0].properties['LocNombre']+
+' : '+e.features[0].properties['geometry_count'] + ", densidad: " +
+e.features[0].properties['densidad_pacientes_km2'] + " por km2. " )
+.addTo(map);
+});
+
+map.on('click', 'hospitales', function(e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(e.features[0].properties['tags.name'] + ' UCI disponibles: ' +
+ e.features[0].properties['avail_icu'])
+.addTo(map);
+});
+
+map.on('mouseenter', 'hospitales', function() {
+map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'hospitales', function() {
+map.getCanvas().style.cursor = '';
+});
+
+});
+
+function toggle_layer(e) {
+	var clickedLayer = e;
+	 
+	var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+	if (visibility === 'visible') {
+		map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+		this.className = '';
+	} else {
+		this.className = 'active';
+		map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+	}
+};
+
+</script>
+ 
+</body>
+</html>

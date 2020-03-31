@@ -1,0 +1,19 @@
+{
+"id": "alto_riesgo",
+"type": "circle",
+"category":"pacientes",
+"srcfile":"mock_risk_points_alto.geojson",
+"source": {
+	"type": "geojson",
+	"data": {{dt}} 
+	},
+"layout": {"visibility":"none"},
+
+"paint": {
+		"circle-radius": 5.5,
+		"circle-color": ["get","color"],
+		"circle-opacity": 0.44,
+		"circle-stroke-width": 0.1,
+        "circle-stroke-color": "#9d0b0b"
+	}
+}

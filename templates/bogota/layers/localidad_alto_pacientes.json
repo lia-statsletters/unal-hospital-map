@@ -1,0 +1,28 @@
+{
+"id": "dens_alto_loc",
+"type": "fill",
+"category":"estadisticas_zona",
+"srcfile":"locality_count_alto.geojson",
+"source": {
+	"type": "geojson",
+	"data": {{dt}} 
+	},
+"layout": {"visibility":"none"},
+"paint": {
+	"fill-outline-color": "#ff0000", 
+	"fill-color": [
+		"interpolate",
+["linear"],
+["get", "densidad_pacientes_km2"],
+0,
+"#f7f7f7",
+0.1,
+"#fb6a4a",
+0.3,
+"#de2d26",
+1,
+"#a50f15"
+	],
+	"fill-opacity": 0.27
+	}
+}

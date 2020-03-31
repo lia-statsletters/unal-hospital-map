@@ -1,0 +1,32 @@
+{
+"id": "dens_bajo_loc",
+"type": "fill",
+"category":"estadisticas_zona",
+"srcfile":"locality_count_bajo.geojson",
+"source": {
+	"type": "geojson",
+	"data": {{dt}} 
+	},
+"layout": {"visibility":"none"},
+"paint": {
+	"fill-outline-color": "#42b883", 
+	"fill-color": [
+		"interpolate",
+["linear"],
+["get", "densidad_pacientes_km2"],
+0,
+"#f7f7f7",
+0.2,
+"#c7e9c0",
+0.5,
+"#a1d99b",
+1,
+"#74c476",
+3,
+"#31a354",
+6,
+"#006d2c"
+	],
+	"fill-opacity": 0.27
+	}
+}

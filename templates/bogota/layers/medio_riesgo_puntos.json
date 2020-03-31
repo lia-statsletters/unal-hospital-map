@@ -1,0 +1,19 @@
+{
+"id": "medio_riesgo",
+"type": "circle",
+"category":"pacientes",
+"srcfile":"mock_risk_points_medio.geojson",
+"source": {
+	"type": "geojson",
+	"data": {{dt}} 
+	},
+"layout": {"visibility":"none"},
+
+"paint": {
+		"circle-radius": 5.5,
+		"circle-color": ["get","color"],
+		"circle-opacity": 0.44,
+		"circle-stroke-width": 0.2,
+        "circle-stroke-color": "#ffd800"
+	}
+}

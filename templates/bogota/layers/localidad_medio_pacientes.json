@@ -1,0 +1,28 @@
+{
+"id": "dens_medio_loc",
+"type": "fill",
+"category":"estadisticas_zona",
+"srcfile":"locality_count_medio.geojson",
+"source": {
+	"type": "geojson",
+	"data": {{dt}} 
+	},
+"layout": {"visibility":"none"},
+"paint": {
+	"fill-outline-color": "#f45905", 
+	"fill-color": [
+		"interpolate",
+["linear"],
+["get", "densidad_pacientes_km2"],
+0,
+"#f7f7f7",
+0.5,
+"#EED322",
+3,
+"#fdd0a2",
+5,
+"#e6550d"
+	],
+	"fill-opacity": 0.27
+	}
+}

@@ -1,0 +1,19 @@
+{
+"id": "hospitales",
+"type": "circle",
+"category":"asistencia",
+"srcfile":"bogota_hospitales.geojson",
+"source": {
+	"type": "geojson",
+	"data": {{dt}} 
+	},
+"layout": {"visibility":"none"},
+
+"paint": {
+		"circle-radius": 10,
+		"circle-opacity": 0.65,
+		"circle-stroke-width": 0.5,
+		"circle-stroke-color": "#36b5b0",
+		"circle-color": "#621055"
+	}
+}
