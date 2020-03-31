@@ -14,7 +14,7 @@ that wants to hack this around and build things, so feel free to copy-paste the 
 ## Como genero el mapa? / How do I generate the map?
 
 Pasos:
-1. Consigue una api key en Mapbox (gratis, free tier 50000 llamadas).
+1. Consigue una api key en [Mapbox](https://account.mapbox.com/) (gratis, free tier 50000 llamadas).
 2. Crea una estructura de folders ".to_ignore/keys/" en la raiz de este proyecto.
 3. Copy-Paste tu api key en un archivo dentro del folder keys que create, llamalo "mapbox.key"
 4. Corre "mapbox_out" desde el directorio raiz de este proyecto (todos los path son relativos a esta)
