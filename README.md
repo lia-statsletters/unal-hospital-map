@@ -9,7 +9,7 @@ that wants to hack this around and build things, so feel free to copy-paste the 
 
 
 
-#FAQ
+# FAQ
 
 ## Como genero el mapa? / How do I generate the map?
 
@@ -32,13 +32,13 @@ El resultado es un html que contiene las capas y una interfaz sencilla para visu
 
 ## De donde salieron los datos? / Where is this data coming from?
 
-	* bogota_hospitales.geojson : 
-		* Poligonos, nombre: Overpass/Nominatim, query hospitales/amenidades (ver pull_hospitals.py en data_utils). 
-		* Numero de camas: mock, creado en massage_geodata.py in data_utils.
+* bogota_hospitales.geojson : 
+	* Poligonos, nombre: Overpass/Nominatim, query hospitales/amenidades (ver pull_hospitals.py en data_utils). 
+	* Numero de camas: mock, creado en massage_geodata.py in data_utils.
 
-	* Pacientes, gps coords: Creado en massage_geodata.py, risk_fake_dots como puntos dentro de cada poligono de riesgo. Los poligonos de riesgo se crearon a mano alzada en MyMap en google, y las formas convertidas de kml a geojson. 
+* Pacientes, gps coords: Creado en massage_geodata.py, risk_fake_dots como puntos dentro de cada poligono de riesgo. Los poligonos de riesgo se crearon a mano alzada en MyMap en google, y las formas convertidas de kml a geojson. 
 
-	* Localidades de Bogota: Tomadas de https://datosabiertos.bogota.gov.co/. Luego hicimos spatial join de los pacientes con los poligonos de cada localidad para obtener la cuenta de "mock" pacientes por localidad. El spatial join esta en spatial_join_points_localities en massage_geodata.py
+* Localidades de Bogota: Tomadas de https://datosabiertos.bogota.gov.co/. Luego hicimos spatial join de los pacientes con los poligonos de cada localidad para obtener la cuenta de "mock" pacientes por localidad. El spatial join esta en spatial_join_points_localities en massage_geodata.py
 
 ## Pero estos son geojsons estaticos! podemos conectar esto con datos en tiempo real? / But those geojsons are static! can we connect this to real time data?
 
